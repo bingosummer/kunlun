@@ -1,11 +1,11 @@
-package terraform
+package tfhandler
 
 import (
 	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/terraform/binary_dist"
+	"github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/binary_dist"
 	"github.com/spf13/afero"
 )
 

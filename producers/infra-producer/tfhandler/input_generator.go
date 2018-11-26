@@ -1,11 +1,11 @@
-package terraform
+package tfhandler
 
 import (
 	"fmt"
 
 	artifacts "github.com/Microsoft/kunlun/artifacts"
 	"github.com/Microsoft/kunlun/common/storage"
-	. "github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/terraform/templates"
+	. "github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/templates"
 )
 
 type InputGenerator struct {

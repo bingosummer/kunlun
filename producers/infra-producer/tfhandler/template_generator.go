@@ -1,9 +1,9 @@
-package terraform
+package tfhandler
 
 import (
 	artifacts "github.com/Microsoft/kunlun/artifacts"
 	"github.com/Microsoft/kunlun/common/storage"
-	. "github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/terraform/templates"
+	. "github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/templates"
 )
 
 type TemplateGenerator struct{}

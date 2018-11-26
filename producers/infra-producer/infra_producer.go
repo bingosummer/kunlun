@@ -13,7 +13,7 @@ import (
 	"github.com/Microsoft/kunlun/common/storage"
 	"github.com/Microsoft/kunlun/common/ui"
 	"github.com/Microsoft/kunlun/producers/infra-producer/handler"
-	"github.com/Microsoft/kunlun/producers/infra-producer/tfhandler/terraform"
+	"github.com/Microsoft/kunlun/producers/infra-producer/tfhandler"
 	"github.com/spf13/afero"
 )
 
@@ -33,24 +33,24 @@ func NewInfraProducer(stateStore storage.Store, handlerType string, debug bool) 
 		terraformOutputBuffer := bytes.NewBuffer([]byte{})
 		terraformDir, _ := stateStore.GetTerraformDir()
 		dotTerraformDir := filepath.Join(terraformDir, ".terraform")
-		bufferingCLI := terraform.NewCLI(terraformOutputBuffer, terraformOutputBuffer, dotTerraformDir)
+		bufferingCLI := tfhandler.NewCLI(terraformOutputBuffer, terraformOutputBuffer, dotTerraformDir)
 		var (
 			terraformCLI terraform.CLI
 			out          io.Writer
 		)
 		if debug {
 			errBuffer := io.MultiWriter(os.Stderr, terraformOutputBuffer)
-			terraformCLI = terraform.NewCLI(errBuffer, terraformOutputBuffer, dotTerraformDir)
+			terraformCLI = tfhandler.NewCLI(errBuffer, terraformOutputBuffer, dotTerraformDir)
 			out = os.Stdout
 		} else {
 			terraformCLI = bufferingCLI
 			out = ioutil.Discard
 		}
-		terraformExecutor := terraform.NewExecutor(terraformCLI, bufferingCLI, stateStore, afs, debug, out)
+		terraformExecutor := tfhandler.NewExecutor(terraformCLI, bufferingCLI, stateStore, afs, debug, out)
 
-		inputGenerator := terraform.NewInputGenerator()
-		templateGenerator := terraform.NewTemplateGenerator()
-		terraformManager := terraform.NewManager(terraformExecutor, templateGenerator, inputGenerator, terraformOutputBuffer, ui)
+		inputGenerator := tfhandler.NewInputGenerator()
+		templateGenerator := tfhanlder.NewTemplateGenerator()
+		terraformManager := tfhandler.NewManager(terraformExecutor, templateGenerator, inputGenerator, terraformOutputBuffer, ui)
 
 		return InfraProducer{
 			manager: terraformManager,

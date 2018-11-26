@@ -1,4 +1,4 @@
-package terraform
+package tfhandler
 
 type Outputs struct {
 	Map map[string]interface{}
